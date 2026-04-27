@@ -55,6 +55,14 @@ app.get("/", (_req, res) => {
 // 静态文件服务 - 提供简历文件访问
 app.use("/uploads", express.static(getUploadsRoot()));
 
+// 去掉 /api 前缀（vercel.json rewrite 统一到 /api/index，再由 Express 处理路径）
+app.use((req, _res, next) => {
+  if (req.path.startsWith("/api")) {
+    req.url = req.url.replace(/^\/api/, "") || "/";
+  }
+  next();
+});
+
 // route
 app.use("/v1/auth", authRouter);
 app.use("/v1/auth", githubRouter);
