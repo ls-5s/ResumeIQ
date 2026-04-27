@@ -7,7 +7,7 @@
       "headers": [
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "https://ai-resume-screening-632q.vercel.app"
+          "value": "https://resume-iq-bb3s.vercel.app"
         },
         {
           "key": "Access-Control-Allow-Methods",
