@@ -8,7 +8,7 @@ const MAX_RETRY_COUNT = 2;
 
 export default function GithubCallback() {
   const [searchParams] = useSearchParams();
-  const [isLoading, setIsLoading] = useState(true);
+  const [, setIsLoading] = useState(true);
   const { login } = useLoginStore();
   const retryCountRef = useRef(0);
 

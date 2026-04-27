@@ -53,6 +53,9 @@ export function formatQuestionsToMarkdown(params: {
   questions.forEach((q, i) => {
     const difficulty = normalizeDifficulty(q.difficulty);
     parts.push(`## ${i + 1}. ${q.question}`);
+    if (difficulty !== "中等") {
+      parts.push(`*难度：${difficulty}*`);
+    }
     parts.push("");
 
     if (q.keyPoints.length > 0) {
@@ -84,6 +87,9 @@ export function formatSingleQuestion(question: InterviewQuestion, index: number)
   const parts: string[] = [];
 
   parts.push(`## ${index + 1}. ${question.question}`);
+  if (difficulty !== "中等") {
+    parts.push(`*难度：${difficulty}*`);
+  }
   parts.push("");
 
   if (question.keyPoints.length > 0) {
@@ -180,8 +186,8 @@ export function extractQuestionsFromRaw(raw: string): InterviewQuestion[] {
       const result: InterviewQuestion[] = [];
 
       for (const match of matches) {
-        // 去掉标题部分，保留正文
-        const titlePart = match[1] ?? "";
+        // 标题部分用于后续扩展，暂不使用
+        const _titlePart = match[1] ?? "";
         let content = match[2] ?? "";
 
         // 提取考察要点
