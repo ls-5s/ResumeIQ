@@ -1,8 +1,6 @@
 {
   "version": 2,
   "rewrites": [{ "source": "/(.*)", "destination": "/api/index" }],
-  "buildCommand": "pnpm install --frozen-lockfile --prefer-offline || pnpm install",
-  "installCommand": "pnpm install --frozen-lockfile --prefer-offline || pnpm install",
   "headers": [
     {
       "source": "/(.*)",
