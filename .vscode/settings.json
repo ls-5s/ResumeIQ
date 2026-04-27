@@ -1,0 +1,5 @@
+{
+  "nuxt.isNuxtApp": false,
+  "tailwindCSS.lint.suggestCanonicalClasses": "ignore",
+  "tailwindCSS.experimental.configFile": "client/src/index.css"
+}

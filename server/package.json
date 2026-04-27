@@ -1,0 +1,48 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "AI Resume Screening Backend",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "deploy": "npm run build && vercel --prod",
+    "db:generate": "drizzle-kit generate:mysql",
+    "db:add-dimension-scores": "tsx scripts/ensure-dimension-scores-column.ts",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.17.2",
+    "@vercel/functions": "^3.4.3",
+    "@vercel/node": "^3.2.11",
+    "axios": "^1.15.2",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^17.3.1",
+    "drizzle-orm": "^0.45.1",
+    "express": "^4.21.0",
+    "imap": "^0.8.19",
+    "jsonwebtoken": "^9.0.2",
+    "mailparser": "^3.9.3",
+    "mammoth": "^1.11.0",
+    "multer": "^2.1.1",
+    "mysql2": "^3.18.2",
+    "nodemailer": "^8.0.1",
+    "pdf-parse": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "9.0.6",
+    "@types/multer": "^2.1.0",
+    "@types/node": "^22.10.0",
+    "@types/nodemailer": "^7.0.11",
+    "drizzle-kit": "^0.31.9",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vercel": "^39.0.0"
+  }
+}

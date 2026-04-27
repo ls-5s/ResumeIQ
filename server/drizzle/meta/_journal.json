@@ -1,0 +1,34 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1745148028,
+      "tag": "0001_add_dimension_scores",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1774519378524,
+      "tag": "0002_freezing_centennial",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1775089012710,
+      "tag": "0003_tense_dormammu",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1777102913283,
+      "tag": "0004_young_obadiah_stane",
+      "breakpoints": true
+    }
+  ]
+}
