@@ -190,11 +190,11 @@ export function extractQuestionsFromRaw(raw: string): InterviewQuestion[] {
 
         // 提取考察要点
         const keyPoints: string[] = [];
-        const keyPointsMatch = content.match(/考察要点[：:]\s*([^\n]+(?:\n(?:  [-*]|- ).+)*)/i);
+        const keyPointsMatch = content.match(/考察要点[：:]\s*([^\n]+(?:\n(?: {2}[-*]|- ).+)*)/i);
         if (keyPointsMatch) {
           const kpLines = keyPointsMatch[0].replace(/^考察要点[：:]\s*/i, "").split("\n");
           for (const line of kpLines) {
-            const cleaned = line.replace(/^[ 　]*[-*][ 　]/, "").trim();
+            const cleaned = line.replace(/^\s*[-*]\s*/, "").trim();
             if (cleaned) keyPoints.push(cleaned);
           }
           content = content.replace(/考察要点[：:][\s\S]*?(?=\n追问|$)/i, "").trim();
