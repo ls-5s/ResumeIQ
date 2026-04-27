@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useLoginStore } from "../../store/Login";
 import toast from "../../utils/toast";
@@ -8,7 +8,6 @@ const MAX_RETRY_COUNT = 2;
 
 export default function GithubCallback() {
   const [searchParams] = useSearchParams();
-  const [, setIsLoading] = useState(true);
   const { login } = useLoginStore();
   const retryCountRef = useRef(0);
 
@@ -21,53 +20,52 @@ export default function GithubCallback() {
       return;
     }
 
-    handleGithubCallback(code);
-  }, [searchParams]);
-
-  const handleGithubCallback = async (code: string) => {
-    try {
-      const userData = await githubRegister(code);
-      
-      login({
-        token: userData.token,
-        refreshToken: userData.refreshToken,
-        username: userData.username,
-        email: userData.email,
-        avatar: userData.avatar,
-      });
-      
-      toast.success("登录成功");
-      window.location.href = "/app";
-    } catch (error: any) {
-      const errorMessage = error?.response?.data?.message || error?.message || "";
-      
-      if (
-        (errorMessage.includes("incorrect or expired") || errorMessage.includes("expired")) &&
-        retryCountRef.current < MAX_RETRY_COUNT
-      ) {
-        retryCountRef.current++;
-        toast.warning(`授权码已过期，正在重新获取... (${retryCountRef.current}/${MAX_RETRY_COUNT})`);
+    const handleGithubCallback = async (code: string) => {
+      try {
+        const userData = await githubRegister(code);
         
-        try {
-          const { url } = await getGithubAuthUrl();
-          setTimeout(() => {
-            window.location.href = url;
-          }, 1000);
-        } catch {
-          setTimeout(() => {
-            window.location.href = "/auth/login";
-          }, 1000);
+        login({
+          token: userData.token,
+          refreshToken: userData.refreshToken,
+          username: userData.username,
+          email: userData.email,
+          avatar: userData.avatar,
+        });
+        
+        toast.success("登录成功");
+        window.location.href = "/app";
+      } catch (error) {
+        const err = error as { response?: { data?: { message?: string } }; message?: string };
+        const errorMessage = err.response?.data?.message || err.message || "";
+        
+        if (
+          (errorMessage.includes("incorrect or expired") || errorMessage.includes("expired")) &&
+          retryCountRef.current < MAX_RETRY_COUNT
+        ) {
+          retryCountRef.current++;
+          toast.warning(`授权码已过期，正在重新获取... (${retryCountRef.current}/${MAX_RETRY_COUNT})`);
+          
+          try {
+            const { url } = await getGithubAuthUrl();
+            setTimeout(() => {
+              window.location.href = url;
+            }, 1000);
+          } catch {
+            setTimeout(() => {
+              window.location.href = "/auth/login";
+            }, 1000);
+          }
+          return;
         }
-        return;
+        
+        console.error('GitHub 登录失败:', error);
+        toast.error(errorMessage || "GitHub 登录失败");
+        window.location.href = "/auth/login";
       }
-      
-      console.error('GitHub 登录失败:', error);
-      toast.error(errorMessage || "GitHub 登录失败");
-      window.location.href = "/auth/login";
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    };
+
+    handleGithubCallback(code);
+  }, [searchParams, login]);
 
   return (
     <div className="flex items-center justify-center min-h-screen">

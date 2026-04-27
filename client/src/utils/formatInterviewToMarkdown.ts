@@ -186,8 +186,6 @@ export function extractQuestionsFromRaw(raw: string): InterviewQuestion[] {
       const result: InterviewQuestion[] = [];
 
       for (const match of matches) {
-        // 标题部分用于后续扩展，暂不使用
-        const _titlePart = match[1] ?? "";
         let content = match[2] ?? "";
 
         // 提取考察要点
